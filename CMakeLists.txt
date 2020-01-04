@@ -7,4 +7,4 @@ include("${CMAKE_BINARY_DIR}/conanbuildinfo.cmake")
 conan_basic_setup(TARGETS)
 
 add_subdirectory(sources)
-
+add_subdirectory(sources/nr)
