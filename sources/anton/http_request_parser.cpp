@@ -1,16 +1,10 @@
 #include "http_request_parser.hpp"
 #include "http_errors.hpp"
 
-#include <iostream>
-#include <algorithm>
-#include <regex>
-
 using namespace boost::asio;
-
 using error_code = boost::system::error_code;
 
 namespace {
-
     bool is_char(int c) {
         return c >= 0 && c <= 127;
     }
@@ -48,6 +42,18 @@ namespace {
 
     bool is_digit(int c) {
         return c >= '0' && c <= '9';
+    }
+
+    void check_headers(http_request &request) {
+        if (request.headers.empty()) {
+            return;
+        }
+
+        auto last_header = request.headers.back();
+
+        if (request.version.major == 1 && last_header.value.empty()) {
+            throw http_errors::bad_request();
+        }
     }
 
     state handle_start(http_request &request, char input) {
@@ -151,6 +157,8 @@ namespace {
         if (input == '\r') {
             return state::before_body;
         }
+
+        check_headers(request);
 
         request.headers.emplace_back(http_header{});
         request.headers.back().name.push_back(input);
