@@ -7,3 +7,4 @@ int main() {
     std::cout << fs::current_path() << std::endl;
     return 0;
 }
+
