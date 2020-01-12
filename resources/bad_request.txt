@@ -1,0 +1,5 @@
+
+GET cats HTTP1.1
+Host: localhost
+Origin: somewhere
+
