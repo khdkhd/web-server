@@ -7,15 +7,15 @@ SET(SOURCES
         http_server.cpp
         http_server.hpp
         http_request.hpp
-        http_headers.cpp
-        http_headers.hpp
+        http_header.hpp
         http_errors.cpp
         http_errors.hpp
         http_request_parser.cpp
         http_request_parser.hpp
         http_version.hpp
         http_request_handler.cpp
-        http_request_handler.hpp)
+        http_request_handler.hpp
+        http_response.hpp http_middleware.cpp http_middleware.hpp)
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 

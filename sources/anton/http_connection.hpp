@@ -5,6 +5,9 @@
 
 #include "http_request_parser.hpp"
 #include "http_request.hpp"
+#include "http_response.hpp"
+#include "http_errors.hpp"
+#include "http_request_handler.hpp"
 
 using namespace boost::asio;
 
@@ -15,15 +18,16 @@ public:
     explicit http_connection(ip::tcp::socket&& socket);
 
 public:
-    void start();
+    void start(http_request_handler &handler);
 
 private:
-    void read();
+    void read(http_request_handler &handler);
+    void write();
 
 private:
+    ip::tcp::socket socket;
+    std::array<char, 4096> buffer;
     http_request_parser parser;
     http_request request;
-    ip::tcp::socket socket;
-
-    std::array<char, 4096> buffer;
+    http_response response;
 };

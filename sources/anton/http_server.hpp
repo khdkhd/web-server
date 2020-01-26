@@ -1,6 +1,7 @@
 #pragma once
 
 #include "http_connection.hpp"
+#include "http_request_handler.hpp"
 
 #include <boost/asio.hpp>
 
@@ -9,7 +10,7 @@ using ip::tcp;
 
 class http_server {
 public:
-    explicit http_server(int port = 80);
+    explicit http_server(http_request_handler& handler, int port = 80);
 public:
     void start();
 
@@ -18,4 +19,5 @@ private:
 private:
     io_context io_context;
     tcp::acceptor acceptor;
+    http_request_handler handler;
 };
