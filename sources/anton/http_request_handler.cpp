@@ -7,6 +7,6 @@ http_request_handler::http_request_handler(std::vector<std::shared_ptr<http_midd
 }
 
 void
-http_request_handler::handle_request(const http_request &request, http_response &response) {
+http_request_handler::handle_request(const http_request &request, http_response &response) const {
     (**chain.begin())(request, response);
 }

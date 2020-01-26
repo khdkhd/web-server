@@ -13,7 +13,7 @@ int main() {
     };
     middlewares.emplace_back(std::make_shared<http_middleware>(logger));
     middlewares.emplace_back(std::make_shared<http_middleware>(filer));
-    http_request_handler handler{middlewares};
+    const http_request_handler handler{middlewares};
     http_server(handler).start();
     return 0;
 }

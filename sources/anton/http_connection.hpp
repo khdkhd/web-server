@@ -18,10 +18,10 @@ public:
     explicit http_connection(ip::tcp::socket&& socket);
 
 public:
-    void start(http_request_handler &handler);
+    void start(http_request_handler const &handler);
 
 private:
-    void read(http_request_handler &handler);
+    void read(http_request_handler const &handler);
     void write();
 
 private:

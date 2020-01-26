@@ -10,7 +10,7 @@ using ip::tcp;
 
 class http_server {
 public:
-    explicit http_server(http_request_handler& handler, int port = 80);
+    explicit http_server(http_request_handler const& handler, int port = 80);
 public:
     void start();
 

@@ -5,7 +5,7 @@
 
 using error_code = boost::system::error_code;
 
-http_server::http_server(http_request_handler& handler, int port) : acceptor(io_context, tcp::endpoint(tcp::v4(), port)), handler(handler) {
+http_server::http_server(http_request_handler const& handler, int port) : acceptor(io_context, tcp::endpoint(tcp::v4(), port)), handler(handler) {
     acceptor.set_option(ip::tcp::acceptor::reuse_address(true));
     acceptor.listen();
     accept();
