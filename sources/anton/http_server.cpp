@@ -22,6 +22,7 @@ void http_server::accept() {
         }
         if (!ec) {
             auto connection = std::make_shared<http_connection>(std::move(socket));
+            connections.insert(connection); // TODO write a connection manager to handle connection pool cleaning
             connection->start(handler);
         }
         accept();

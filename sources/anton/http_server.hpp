@@ -4,6 +4,7 @@
 #include "http_request_handler.hpp"
 
 #include <boost/asio.hpp>
+#include <set>
 
 using namespace boost::asio;
 using ip::tcp;
@@ -20,4 +21,5 @@ private:
     io_context io_context;
     tcp::acceptor acceptor;
     http_request_handler handler;
+    std::set<std::shared_ptr<http_connection>> connections;
 };

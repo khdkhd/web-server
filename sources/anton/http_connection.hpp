@@ -26,7 +26,7 @@ private:
 
 private:
     ip::tcp::socket socket;
-    std::array<char, 4096> buffer;
+    std::array<char, 8192> request_buffer;
     http_request_parser parser;
     http_request request;
     http_response response;

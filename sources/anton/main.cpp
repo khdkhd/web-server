@@ -9,6 +9,8 @@ int main() {
         (*next)(request, response);
     };
     auto filer = [](const http_request &request, http_response &response, std::shared_ptr<http_middleware> next) {
+        response.version = request.version;
+        response.message = "OK";
         response.status = 200;
     };
     middlewares.emplace_back(std::make_shared<http_middleware>(logger));
