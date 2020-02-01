@@ -4,6 +4,8 @@ SET(SOURCES
         main.cpp
         http_connection.hpp
         http_connection.cpp
+        http_connection_manager.cpp
+        http_connection_manager.hpp
         http_server.cpp
         http_server.hpp
         http_request.hpp
@@ -15,7 +17,9 @@ SET(SOURCES
         http_version.hpp
         http_request_handler.cpp
         http_request_handler.hpp
-        http_response.hpp http_middleware.cpp http_middleware.hpp)
+        http_response.hpp
+        http_middleware.cpp
+        http_middleware.hpp)
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 

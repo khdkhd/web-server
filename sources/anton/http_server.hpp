@@ -1,6 +1,6 @@
 #pragma once
 
-#include "http_connection.hpp"
+#include "http_connection_manager.hpp"
 #include "http_request_handler.hpp"
 
 #include <boost/asio.hpp>
@@ -11,7 +11,7 @@ using ip::tcp;
 
 class http_server {
 public:
-    explicit http_server(http_request_handler const& handler, int port = 80);
+    explicit http_server(http_request_handler  handler, int port = 80);
 public:
     void start();
 
@@ -21,5 +21,5 @@ private:
     io_context io_context;
     tcp::acceptor acceptor;
     http_request_handler handler;
-    std::set<std::shared_ptr<http_connection>> connections;
+    http_connection_manager connection_manager;
 };

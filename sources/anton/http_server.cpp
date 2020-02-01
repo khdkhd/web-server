@@ -2,10 +2,13 @@
 
 #include <iostream>
 #include <memory>
+#include <utility>
 
 using error_code = boost::system::error_code;
 
-http_server::http_server(http_request_handler const& handler, int port) : acceptor(io_context, tcp::endpoint(tcp::v4(), port)), handler(handler) {
+http_server::http_server(http_request_handler  handler, int port) :
+acceptor(io_context, tcp::endpoint(tcp::v4(), port)),
+handler(std::move(handler)) {
     acceptor.set_option(ip::tcp::acceptor::reuse_address(true));
     acceptor.listen();
     accept();
@@ -21,9 +24,7 @@ void http_server::accept() {
             return;
         }
         if (!ec) {
-            auto connection = std::make_shared<http_connection>(std::move(socket));
-            connections.insert(connection); // TODO write a connection manager to handle connection pool cleaning
-            connection->start(handler);
+            connection_manager.start(std::move(socket), handler);
         }
         accept();
     };
