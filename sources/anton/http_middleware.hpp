@@ -10,7 +10,7 @@ static int n = 0;
 
 class http_middleware {
 public:
-    http_middleware(const std::function<void(const http_request&, http_response&, std::shared_ptr<http_middleware>)> handler): handler(handler), id(++n) {}
+    http_middleware(const std::function<void(const http_request&, http_response&, std::shared_ptr<http_middleware>)> handler): handler(handler) {}
 public:
     void chain(std::shared_ptr<http_middleware> _next);
 public:
@@ -18,7 +18,6 @@ public:
 private:
     std::function<void(const http_request&, http_response&, std::shared_ptr<http_middleware>)> handler;
     std::shared_ptr<http_middleware> next;
-    int id;
 };
 
 
