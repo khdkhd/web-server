@@ -1,8 +1,6 @@
 #include "http_connection.hpp"
 #include "http_middleware.hpp"
 
-using error_code = boost::system::error_code;
-
 http_connection::
 http_connection(ip::tcp::socket &&socket) : socket(std::move(socket)) {
 
@@ -67,14 +65,18 @@ void http_connection::write() {
 
     socket.async_send(buffers, [&](error_code ec, std::size_t) {
         if (!ec) {
-            socket.shutdown(ip::tcp::socket::shutdown_both);
-            if (shutdown_handler) {
-                shutdown_handler();
-            }
+            return stop();
         }
     });
 }
 
-void http_connection::on_Shutdown(std::function<void()>&& handler) {
+void http_connection::on_shutdown(std::function<void()>&& handler) {
     shutdown_handler = std::move(handler);
+}
+
+void http_connection::stop() {
+    socket.shutdown(ip::tcp::socket::shutdown_both);
+    if (shutdown_handler) {
+        shutdown_handler();
+    }
 }

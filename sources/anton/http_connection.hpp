@@ -10,6 +10,7 @@
 #include "http_request_handler.hpp"
 
 using namespace boost::asio;
+using error_code = boost::system::error_code;
 
 class http_connection {
 public:
@@ -18,8 +19,9 @@ public:
     explicit http_connection(ip::tcp::socket&& socket);
 public:
     void start(http_request_handler const &handler);
+    void stop();
 public:
-    void on_Shutdown(std::function<void()>&& handler);
+    void on_shutdown(std::function<void()>&& handler);
 private:
     void read(http_request_handler const &handler);
     void write();
