@@ -21,7 +21,7 @@ public:
     void start(http_request_handler const &handler);
     void stop();
 public:
-    void on_shutdown(std::function<void()>&& handler);
+    void on_done(std::function<void()>&& handler);
 private:
     void read(http_request_handler const &handler);
     void write();
@@ -32,5 +32,5 @@ private:
     http_request_parser parser;
     http_request request;
     http_response response;
-    std::function<void()> shutdown_handler;
+    std::function<void()> on_done_handler;
 };

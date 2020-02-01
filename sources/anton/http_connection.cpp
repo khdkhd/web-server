@@ -27,6 +27,9 @@ void http_connection::read(http_request_handler const &handler) {
                 return write();
             }
         }
+        if (ec != error::operation_aborted) {
+            stop();
+        }
     };
 
     socket.async_read_some(buffer(request_buffer), read_behavior);
@@ -65,18 +68,21 @@ void http_connection::write() {
 
     socket.async_send(buffers, [&](error_code ec, std::size_t) {
         if (!ec) {
-            return stop();
+            socket.shutdown(ip::tcp::socket::shutdown_both);
+        }
+        if (ec != error::operation_aborted) {
+            stop();
         }
     });
 }
 
-void http_connection::on_shutdown(std::function<void()>&& handler) {
-    shutdown_handler = std::move(handler);
+void http_connection::on_done(std::function<void()>&& handler) {
+    on_done_handler = std::move(handler);
 }
 
 void http_connection::stop() {
-    socket.shutdown(ip::tcp::socket::shutdown_both);
-    if (shutdown_handler) {
-        shutdown_handler();
+    socket.close();
+    if (on_done_handler) {
+        on_done_handler();
     }
 }
