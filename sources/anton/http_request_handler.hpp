@@ -8,7 +8,7 @@
 
 class http_request_handler {
 public:
-    explicit http_request_handler(std::vector<std::shared_ptr<http_middleware>> chain);
+    explicit http_request_handler(std::vector<std::shared_ptr<http_middleware>>&& chain);
 
 public:
     void handle_request(const http_request &request, http_response &response) const;

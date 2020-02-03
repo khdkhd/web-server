@@ -1,7 +1,5 @@
 #include "http_server.hpp"
 
-#include <iostream>
-#include <memory>
 #include <utility>
 
 using error_code = boost::system::error_code;

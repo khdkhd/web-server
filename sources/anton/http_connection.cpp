@@ -49,7 +49,8 @@ void http_connection::write() {
     buffers.emplace_back(buffer(response.message));
     buffers.emplace_back(buffer(crlf));
 
-    response.headers.emplace_back(http_header{"content-length", std::to_string(response.body.size())});
+    auto content_length = std::to_string(response.body.size());
+    response.headers.emplace_back(http_header{"content-length", content_length});
 
     for (auto const &header: response.headers) {
         buffers.emplace_back(buffer(header.name));
