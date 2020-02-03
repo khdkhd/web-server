@@ -4,6 +4,7 @@
 #include "http_request_handler.hpp"
 
 #include <boost/asio.hpp>
+#include <memory>
 #include <set>
 
 using namespace boost::asio::ip;
